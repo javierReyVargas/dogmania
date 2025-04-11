@@ -3,6 +3,7 @@ import { SearchComponent } from '../../components/search/search.component';
 import { dogManiaStore } from '../../store/dogMania.store';
 import {MatCardModule} from '@angular/material/card';
 import { BreedSubBreedsComponent } from '../../components/breed-sub-breeds/breed-sub-breeds.component';
+import { DogImgComponent } from '../../components/dog-img/dog-img.component';
 
 @Component({
   selector: 'app-main',
@@ -10,6 +11,7 @@ import { BreedSubBreedsComponent } from '../../components/breed-sub-breeds/breed
     SearchComponent,
     MatCardModule,
     BreedSubBreedsComponent,
+    DogImgComponent,
   ],
   providers: [dogManiaStore],
   templateUrl: './main.component.html',

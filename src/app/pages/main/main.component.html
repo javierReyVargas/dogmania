@@ -1,10 +1,13 @@
 <div>
-  <mat-card class="max-w-90 md:max-w-110">
+  <mat-card>
     <mat-card-header class="justify-center">
       <search (onInputValue)="store.updateFilterStringBreed($event)" />
     </mat-card-header>
     <mat-card-content>
-      <breed-sub-breeds [filteredDogs]="store.filteredDogs()" />
+      <breed-sub-breeds [filteredDogs]="store.filteredDogs()" (onSelectedBreed)="store.loadImagesByBreed($event)" />
     </mat-card-content>
   </mat-card>
+</div>
+<div class="mt-2">
+  <dog-img [allImages]="store.allImages()" [breedName]="store.selectedDog()?.breed ?? null" />
 </div>
