@@ -1,9 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { SearchComponent } from '../../components/search/search.component';
+import { dogManiaStore } from '../../store/dogMania.store';
+import {MatCardModule} from '@angular/material/card';
+import { BreedSubBreedsComponent } from '../../components/breed-sub-breeds/breed-sub-breeds.component';
 
 @Component({
   selector: 'app-main',
-  imports: [],
+  imports: [
+    SearchComponent,
+    MatCardModule,
+    BreedSubBreedsComponent,
+  ],
+  providers: [dogManiaStore],
   templateUrl: './main.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class MainComponent { }
+export default class MainComponent implements OnInit {
+  readonly store = inject(dogManiaStore);
+
+  ngOnInit(): void {
+    this.store.loadAll();
+  }
+}
