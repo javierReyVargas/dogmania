@@ -1,5 +1,5 @@
 import {patchState, signalStore, withComputed, withMethods, withState} from '@ngrx/signals';
-import { Dog } from '../interfaces';
+import { Dog, ImgDog } from '../interfaces';
 import { computed, inject } from '@angular/core';
 import { DogsService } from '../service/dogs.service';
 import { pipe, switchMap, tap } from 'rxjs';
@@ -13,6 +13,7 @@ type DogManiaState = {
   selectedSubBreed: string | null;
   isLoading: boolean;
   error: string | null;
+  allImages: ImgDog[];
 };
 
 const initialState: DogManiaState = {
@@ -23,6 +24,7 @@ const initialState: DogManiaState = {
   selectedSubBreed: null,
   isLoading: false,
   error: null,
+  allImages: [],
 };
 
 export const dogManiaStore = signalStore(
@@ -43,6 +45,18 @@ export const dogManiaStore = signalStore(
             tap( (allDogs: Dog[]) => {
               patchState(store, (state) => ({ allDogs, filteredDogs: allDogs, isLoading: false }))
             } )
+          )
+        ),
+      )
+    ),
+    loadImagesByBreed: rxMethod<Dog>(
+      pipe(
+        tap((dog: Dog) => patchState(store, (state) => ({selectedDog: dog, isLoading: true}))),
+        switchMap((dog: Dog) => dogService.getImagesByBreed(dog.breed)
+          .pipe(
+            tap((images: ImgDog[]) => {
+              patchState(store, (state) => ({ allImages: images, isLoading: false }))
+            })
           )
         ),
       )
