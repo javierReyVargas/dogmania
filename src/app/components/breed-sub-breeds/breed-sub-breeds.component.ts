@@ -1,9 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {MatChipsModule} from '@angular/material/chips';
+import { Dog } from '../../interfaces';
+
 
 @Component({
-  selector: 'app-breed-sub-breeds',
-  imports: [],
+  selector: 'breed-sub-breeds',
+  imports: [MatChipsModule],
   templateUrl: './breed-sub-breeds.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BreedSubBreedsComponent { }
+export class BreedSubBreedsComponent {
+  filteredDogs = input<Dog[]>([]);
+}
