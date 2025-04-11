@@ -1,11 +1,14 @@
-import {patchState, signalStore, withMethods, withState} from '@ngrx/signals';
+import {patchState, signalStore, withComputed, withMethods, withState} from '@ngrx/signals';
 import { Dog } from '../interfaces';
+import { computed, inject } from '@angular/core';
+import { DogsService } from '../service/dogs.service';
+import { pipe, switchMap, tap } from 'rxjs';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
 
 type DogManiaState = {
   allDogs: Dog[];
   filterStringBreed: string;
   filterStringSubBreed: string;
-  filteredDogs: Dog[];
   selectedDog: Dog | null;
   selectedSubBreed: string | null;
   isLoading: boolean;
@@ -16,7 +19,6 @@ const initialState: DogManiaState = {
   allDogs: [],
   filterStringBreed: '',
   filterStringSubBreed: '',
-  filteredDogs: [],
   selectedDog: null,
   selectedSubBreed: null,
   isLoading: false,
@@ -26,9 +28,31 @@ const initialState: DogManiaState = {
 export const dogManiaStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withMethods( (store) => ({
+  withMethods( (store, dogService = inject(DogsService)) => ({
     updateFilterStringBreed(query: string): void {
       patchState(store, (state) => ({filterStringBreed: query}))
-    }
-  }))
+    },
+    updateFilterStringSubBreed(query: string): void {
+      patchState(store, (state) => ({filterStringSubBreed: query}))
+    },
+    loadAll: rxMethod<void>(
+      pipe(
+        tap(() => patchState(store, (state) => ({isLoading: true}))),
+        switchMap(() => dogService.getAllDogs()
+          .pipe(
+            tap( (allDogs: Dog[]) => {
+              patchState(store, (state) => ({ allDogs, filteredDogs: allDogs, isLoading: false }))
+            } )
+          )
+        ),
+      )
+    )
+  })),
+  withComputed( ({allDogs, filterStringBreed}) => ({
+    filteredDogs: computed( () => {
+      return allDogs().filter((dog: Dog) => {
+        return dog.breed.toLowerCase().includes(filterStringBreed().toLowerCase());
+      });
+    })
+  })),
 );
