@@ -1,0 +1,10 @@
+<mat-grid-list cols="3" rowHeight="2:1" gutterSize="10px">
+  @for (image of allImages(); track $index) {
+  <mat-grid-tile>
+    <img [src]="image.url" [alt]="breedName()" class="w-full h-full object-cover" />
+    <mat-grid-tile-footer>
+      <h3>{{ breedName() }}</h3>
+    </mat-grid-tile-footer>
+  </mat-grid-tile>
+  }
+</mat-grid-list>
