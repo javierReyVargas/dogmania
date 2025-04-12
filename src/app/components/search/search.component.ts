@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -10,6 +10,7 @@ import {MatInputModule} from '@angular/material/input';
 })
 export class SearchComponent {
   onInputValue = output<string>();
+  label = input<string>('Search for a dog breed');
 
   onSendValue(value: Event): void {
     const input = value.target as HTMLInputElement;
