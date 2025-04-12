@@ -4,6 +4,9 @@
     <img [src]="image.url" [alt]="breedName()" class="w-full h-full object-cover" />
     <mat-grid-tile-footer>
       <h3>{{ breedName() }}</h3>
+      @if (subBreedName()) {
+      - <h4>{{subBreedName()}}</h4>
+      }
     </mat-grid-tile-footer>
   </mat-grid-tile>
   }

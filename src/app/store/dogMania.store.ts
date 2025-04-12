@@ -51,7 +51,7 @@ export const dogManiaStore = signalStore(
     ),
     loadImagesByBreed: rxMethod<Dog>(
       pipe(
-        tap((dog: Dog) => patchState(store, (state) => ({selectedDog: dog, isLoading: true}))),
+        tap((dog: Dog) => patchState(store, (state) => ({selectedDog: dog, isLoading: true, selectedSubBreed: null}))),
         switchMap((dog: Dog) => dogService.getImagesByBreed(dog.breed)
           .pipe(
             tap((images: ImgDog[]) => {

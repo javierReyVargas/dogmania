@@ -15,5 +15,5 @@ import {MatGridListModule} from '@angular/material/grid-list';
 export class DogImgComponent {
   allImages = input<ImgDog[]>([]);
   breedName = input<string | null>(null);
-  subBreedName = input<string>('');
+  subBreedName = input<string | null>(null);
 }

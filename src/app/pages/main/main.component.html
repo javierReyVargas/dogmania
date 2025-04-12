@@ -22,5 +22,6 @@
   </mat-card>
 </div>
 <div class="mt-2">
-  <dog-img [allImages]="store.allImages()" [breedName]="store.selectedDog()?.breed ?? null" />
+  <dog-img [allImages]="store.allImages()" [breedName]="store.selectedDog()?.breed ?? null"
+    [subBreedName]="store.selectedSubBreed()" />
 </div>
