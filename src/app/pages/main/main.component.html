@@ -1,11 +1,24 @@
 <div>
   <mat-card>
     <mat-card-header class="justify-center">
-      <search (onInputValue)="store.updateFilterStringBreed($event)" />
+      <search (onInputValue)="store.updateFilterStringBreed($event)" class="w-full" />
     </mat-card-header>
     <mat-card-content>
-      <breed-sub-breeds [filteredDogs]="store.filteredDogs()" (onSelectedBreed)="store.loadImagesByBreed($event)" />
+      <breed [filteredDogs]="store.filteredDogs()" (onSelectedBreed)="store.loadImagesByBreed($event)" />
     </mat-card-content>
+    @if (store.selectedDog() && store.selectedDog()!.subBreed) {
+    <mat-card-actions class="justify-center">
+      <div class="flex-col">
+        <div>
+          <search (onInputValue)="store.updateFilterStringSubBreed($event)"
+            [label]="`Search for ${store.selectedDog()?.breed} sub-breed`" class="w-100" />
+        </div>
+        <div class="flex justify-center">
+          <sub-breeds [listSubBreeds]="store.filteredSubBreeds()" (selectedSubBreed)="getImagesBySubBreed($event)" />
+        </div>
+      </div>
+    </mat-card-actions>
+    }
   </mat-card>
 </div>
 <div class="mt-2">

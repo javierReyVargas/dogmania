@@ -1,0 +1,7 @@
+<div>
+  <mat-chip-listbox aria-label="Cutest dog breeds">
+    @for (dog of filteredDogs().slice(0, 12); track dog) {
+    <mat-chip-option (click)="selectedBreed(dog)">{{dog.breed}}</mat-chip-option>
+    }
+  </mat-chip-listbox>
+</div>
