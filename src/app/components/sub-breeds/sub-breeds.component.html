@@ -1,0 +1,5 @@
+<mat-chip-listbox aria-label="Cutest dog sub breeds">
+  @for (subBreed of listSubBreeds(); track subBreed) {
+  <mat-chip-option (click)="selectedSubBreed.emit(subBreed)">{{subBreed}}</mat-chip-option>
+  }
+</mat-chip-listbox>
