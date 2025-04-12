@@ -2,6 +2,26 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.5.
 
+## Technologies Used
+
+- **Angular 19**: Latest version of Angular with standalone components
+- **@angular/material**: Material Design components for Angular
+- **@ngrx/signals**: State management using NgRx Signals for reactive state handling
+- **TailwindCSS**: Utility-first CSS framework for styling
+- **RxJS**: Reactive Extensions library for handling asynchronous data streams
+- **TypeScript**: Typed superset of JavaScript
+- **Dog CEO API**: External API integration for dog breeds and images
+
+## Features
+
+- Search and filter dog breeds
+- Display and filter sub-breeds for selected breeds
+- Image gallery for breeds and sub-breeds
+- Responsive grid layout
+- Material Design components integration
+- Reactive state management with NgRx Signals
+- Modern UI with TailwindCSS styling
+
 ## Development server
 
 To start a local development server, run:
