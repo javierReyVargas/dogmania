@@ -2,16 +2,18 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { SearchComponent } from '../../components/search/search.component';
 import { dogManiaStore } from '../../store/dogMania.store';
 import {MatCardModule} from '@angular/material/card';
-import { BreedSubBreedsComponent } from '../../components/breed-sub-breeds/breed-sub-breeds.component';
+import { BreedComponent } from '../../components/breed/breed.component';
 import { DogImgComponent } from '../../components/dog-img/dog-img.component';
+import { SubBreedsComponent } from '../../components/sub-breeds/sub-breeds.component';
 
 @Component({
   selector: 'app-main',
   imports: [
     SearchComponent,
     MatCardModule,
-    BreedSubBreedsComponent,
+    BreedComponent,
     DogImgComponent,
+    SubBreedsComponent,
   ],
   providers: [dogManiaStore],
   templateUrl: './main.component.html',
@@ -22,5 +24,8 @@ export default class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.loadAll();
+  }
+  getImagesBySubBreed(subBreed: string): void {
+    this.store.loadImagesBySubBreed({breed: this.store.selectedDog()!.breed, subBreed});
   }
 }

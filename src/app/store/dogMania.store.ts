@@ -60,13 +60,30 @@ export const dogManiaStore = signalStore(
           )
         ),
       )
-    )
+    ),
+    loadImagesBySubBreed: rxMethod<{ breed: string, subBreed: string }>(
+      pipe(
+        tap((dog: { breed: string, subBreed: string }) => patchState(store, (state) => ({selectedSubBreed: dog.subBreed, isLoading: true}))),
+        switchMap((dog: { breed: string, subBreed: string }) => dogService.getImagesBySubBreed(dog.breed, dog.subBreed)
+          .pipe(
+            tap((images: ImgDog[]) => {
+              patchState(store, (state) => ({ allImages: images, isLoading: false }))
+            })
+          )
+        ),
+      )
+    ),
   })),
-  withComputed( ({allDogs, filterStringBreed}) => ({
+  withComputed( ({allDogs, filterStringBreed, selectedDog, filterStringSubBreed}) => ({
     filteredDogs: computed( () => {
       return allDogs().filter((dog: Dog) => {
         return dog.breed.toLowerCase().includes(filterStringBreed().toLowerCase());
       });
-    })
+    }),
+    filteredSubBreeds: computed(() => {
+      return selectedDog()?.subBreed.filter((subBreed: string) => {
+        return subBreed.toLowerCase().includes(filterStringSubBreed().toLowerCase());
+      }) ?? [];
+    }),
   })),
 );

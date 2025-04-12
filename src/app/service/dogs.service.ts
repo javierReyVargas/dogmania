@@ -38,10 +38,12 @@ export class DogsService {
         })
       );
   }
-  getImagesBySubBreed(breed: string, subBreed: string): Observable<string[]> {
+  getImagesBySubBreed(breed: string, subBreed: string): Observable<ImgDog[]> {
     return this.http.get<{ message: string[] }>(`${this.baseUrl}breed/${breed}/${subBreed}/images`)
       .pipe(
-        map(response => response.message)
+        map(response => response.message.map((url: string) => {
+          return {url};
+        }))
       );
   }
 }
